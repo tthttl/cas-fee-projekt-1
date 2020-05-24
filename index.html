@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Task Force</title>
+    <link rel="stylesheet" href="assets/styles/main.css">
+</head>
+<body>
+<header>
+    <nav>
+        <ul class="nav-grid">
+            <li class="nav-grid__item--first">
+                <a href="create-task.html" class="btn">Create new Task</a>
+            </li>
+            <li class="nav-grid__item--last">
+                <button class="btn" onclick="toggleTheme()">Switch Theme</button>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <div class="container">
+        <ul class="filter-grid">
+            <li>
+                <button class="btn">By finished Date</button>
+            </li>
+            <li>
+                <button class="btn">By created Date</button>
+            </li>
+            <li>
+                <button class="btn">By Importance</button>
+            </li>
+            <li class="filter-grid__item--last">
+                <button class="btn">Show finished</button>
+            </li>
+        </ul>
+    </div>
+    <div class="container task-box">
+        <div class="container task-item-grid">
+            <div class="deadline">
+                <input type="date" name="deadline" disabled value="2020-06-28">
+            </div>
+            <div class="checkbox">
+                <label for="finished">Finished</label>
+                <input id="finished" name="finished" type="checkbox">
+            </div>
+            <div class="title-box">
+                <text class="title">Finish Projekt 1</text>
+                <div class="icon-container">
+                    <svg class="icon icon--primary" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="description-box">
+                <text class="description">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Architecto consequatur cum ea eligendi eos esse eveniet ipsa
+                    ipsam laudantium minima molestias mollitia nesciunt omnis,
+                    quod sed sunt, vero voluptatibus! Veritatis!
+                </text>
+                <div class="icon-container icon-container--right">
+                    <svg class="icon icon--tertiary" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 5a.5.5 0 0 0-1 0v4.793L5.354 7.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 9.793V5z"/>
+                    </svg>
+                </div>
+            </div>
+            <a class="btn btn--large" href="edit-task.html"><span>Edit</span></a>
+        </div>
+    </div>
+</main>
+<script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Ubuntu:wght@400;500;700&display=swap');
+
+.theme-classic {
+    --background-color: #9B786F;
+    --background-color-faded: rgba(155, 120, 111, 0.7);
+    --shadow-color: #46344E;
+    --font-color: #f6eded;
+    --color-primary: #FAED26;
+    --color-primary-faded: rgba(250, 237, 38, 0.5);
+    --color-secondary: #5A5560;
+    --color-secondary-faded: rgba(90, 85, 96, 0.6);
+    --color-tertiary: #9D8D8F;
+    --color-tertiary-faded: rgba(157, 141, 143, 0.7);
+    --background-image-url: url("https://images.pexels.com/photos/204511/pexels-photo-204511.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+    --font-family: 'Ubuntu', sans-serif;
+}
+
+.theme-modern {
+    --background-color: #2F2FA2;
+    --background-color-faded: rgba(47, 47, 162, 0.7);
+    --shadow-color: #242582;
+    --font-color: #ffffff;
+    --color-primary: #F64C72;
+    --color-primary-faded: rgba(246, 76, 114, 0.5);
+    --color-secondary: #553D67;
+    --color-secondary-faded: rgba(85, 61, 103, 0.6);
+    --color-tertiary: #99738E;
+    --color-tertiary-faded: rgba(153, 115, 142, 0.7);
+    --background-image-url: url("https://www.wealthmanagement.com/sites/wealthmanagement.com/files/styles/article_featured_retina/public/investment-technology-data-Pinkypills-iStock-ThinkstockPhotos-522152858_0.jpg?itok=svPZivyz");
+    --font-family: 'Montserrat', sans-serif;
+}

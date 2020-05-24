@@ -1,0 +1,85 @@
+@import "shared.css";
+
+.form-grid{
+    padding-top: 5vh;
+    display: grid;
+    grid-template-rows: 1fr 4fr 1fr 1fr 2fr;
+    height: 40vh;
+}
+
+.form-grid__row{
+    display: flex;
+    padding-bottom: 1.5rem;
+}
+
+.form-grid__column{
+    height: 8rem;
+    padding-top: 1rem;
+    display: flex;
+    flex-flow: wrap column;
+    justify-content: space-around;
+}
+
+label{
+    flex: 0 0 30%;
+}
+
+#title,
+#description{
+    flex: 0 0 70%;
+    background-color: var(--color-secondary);
+    border-color: var(--shadow-color);
+    outline-color: var(--color-primary);
+}
+
+#deadline{
+    background-color: var(--color-secondary);
+    border-color: var(--shadow-color);
+    outline-color: var(--color-primary);
+}
+
+a{
+    align-self: flex-end;
+}
+
+.btn--small {
+    width: 20%;
+}
+
+.icon{
+    height: 2rem;
+    fill: var(--color-secondary);
+}
+
+.icon--filled{
+    fill: var(--color-primary-faded);
+}
+
+.icon--selected{
+    fill: var(--color-primary);
+}
+
+.icon:hover{
+    cursor: pointer;
+}
+
+#priority{
+    display: none;
+}
+
+@media screen and (min-width: 1000px) {
+    .form-grid{
+        width: 60%;
+        margin: auto;
+    }
+
+    #title,
+    #description,
+    .icon-container{
+        flex: 0 0 80%;
+    }
+
+    label{
+        flex: 0 0 20%;
+    }
+}
