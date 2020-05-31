@@ -35,13 +35,35 @@
 
 .task-item-grid {
     display: grid;
-    grid-template: 3fr 3fr / 4fr 10fr 2fr;
+    grid-template: 1fr 1fr / 4fr 10fr 2fr;
     background-color: var(--color-secondary-faded);
     padding: 2rem;
 }
 
+.task-item-grid--opened{
+    grid-template: 1fr 3fr / 4fr 10fr 2fr;
+}
+
 .checkbox, .description-box {
     grid-row-start: 2;
+}
+
+.checkbox{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.icon--checked, .icon--un-checked{
+    flex: 0 0 15%;
+}
+
+.checkbox-text{
+    flex: 0 0 80%;
+}
+
+.icon--invisible{
+    display: none;
 }
 
 .btn--large {
@@ -62,24 +84,39 @@
 }
 
 .icon-container{
-    flex: 0 0 30%;
+    flex: 0 0 35%;
+    display: flex;
+    justify-content: center;
 }
 
 .icon-container--right{
     display: flex;
     justify-content: center;
+    align-items: flex-end;
 }
 
 .icon{
     height: 2rem;
+    transition: transform .2s ease;
+}
+
+.icon--upside-down{
+    transform: rotate(180deg);
 }
 
 .icon--primary{
     fill: var(--color-primary);
 }
 
-.icon--tertiary{
+.icon--btn{
     fill: var(--color-tertiary);
+    border: 1px var(--shadow-color) solid;
+    border-radius: 10%;
+}
+
+.icon--btn:hover{
+    fill: var(--color-secondary);
+    border-color: var(--color-primary);
 }
 
 @media screen and (min-width: 1000px) {
