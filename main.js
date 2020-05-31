@@ -57,12 +57,12 @@ function resizeTextLength(event) {
 
 function toggleTextLength(description, dataContent) {
     if (description.textContent.length > 160) {
-        description.textContent = dataContent.substring(0, 150) + ' (...)';
+        description.textContent = dataContent.substring(0, 150) + '...';
     } else {
         if (dataContent.length < 300) {
             description.textContent = dataContent;
         } else {
-            description.textContent = dataContent.substring(0, 300) + ' (...)';
+            description.textContent = dataContent.substring(0, 300) + '...';
         }
     }
 }
@@ -73,7 +73,7 @@ function shortenText(icon) {
         .find((child) => child.tagName === 'TEXT');
     const dataContent = description.dataset.content;
     if (dataContent.length > 150) {
-        description.textContent = dataContent.substring(0, 150) + ' (...)';
+        description.textContent = dataContent.substring(0, 150) + '...';
     } else {
         description.textContent = dataContent;
     }
