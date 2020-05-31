@@ -152,6 +152,8 @@
     .task-item-grid{
         grid-template: 1fr 1fr / 3fr 11fr 2fr;
         padding: 1rem;
+        margin-bottom: 1rem;
+
     }
 
     .task-item-grid--opened{
@@ -188,7 +190,6 @@
 
     .icon-container{
         flex: 0 0 35%;
-        justify-content: center;
     }
 
     .description{

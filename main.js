@@ -56,8 +56,8 @@ function resizeTextLength(event) {
 }
 
 function toggleTextLength(description, dataContent) {
-    if (description.textContent.length > 160) {
-        description.textContent = dataContent.substring(0, 150) + '...';
+    if (description.textContent.length > 110) {
+        description.textContent = dataContent.substring(0, 100) + '...';
     } else {
         if (dataContent.length < 300) {
             description.textContent = dataContent;
@@ -72,8 +72,8 @@ function shortenText(icon) {
     const description = Array.from(descriptionBox.children)
         .find((child) => child.tagName === 'TEXT');
     const dataContent = description.dataset.content;
-    if (dataContent.length > 150) {
-        description.textContent = dataContent.substring(0, 150) + '...';
+    if (dataContent.length > 100) {
+        description.textContent = dataContent.substring(0, 100) + '...';
     } else {
         description.textContent = dataContent;
     }
