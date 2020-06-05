@@ -49,22 +49,6 @@ export function shortenText(icon) {
     }
 }
 
-export function selectCheckbox(checkbox) {
-    const isFinished = checkbox.dataset.finished.toLowerCase() === 'true';
-    if (isFinished) {
-        hideIcon(checkbox.children, 'icon--un-checked');
-    } else {
-        hideIcon(checkbox.children, 'icon--checked');
-    }
-
-}
-
-export function hideIcon(children, className) {
-    Array.from(children)
-        .find((child) => child.classList.contains(className))
-        .classList.add('icon--invisible');
-}
-
 export function setImportance(iconContainer) {
     const importance = iconContainer.dataset.importance;
     const documentFragment = document.createDocumentFragment();

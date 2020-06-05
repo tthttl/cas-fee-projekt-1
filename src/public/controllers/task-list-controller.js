@@ -2,7 +2,6 @@ import {
     resizeItem,
     resizeTextLength,
     rotateIcon,
-    selectCheckbox,
     setImportance,
     shortenText,
     initSortingLogic,
@@ -38,12 +37,8 @@ export class TaskListController {
                     <div class="deadline">
                         <text>{{this.deadline}}</text>
                     </div>
-                    <div class="checkbox" data-finished="{{this.isFinished}}">
-                        <svg class="icon icon--primary icon--un-checked" viewBox="0 0 16 16"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                  d="M11 2H5a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V5a3 3 0 0 0-3-3zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z"/>
-                        </svg>
+                    <div class="checkbox" data-id="{{this.id}}">
+                        {{#if this.isFinished}}
                         <svg class="icon icon--primary icon--checked" viewBox="0 0 16 16"
                              xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd"
@@ -52,6 +47,14 @@ export class TaskListController {
                                   d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>
                         </svg>
                         <div class="checkbox-text">Finished</div>
+                        {{else}}
+                        <svg class="icon icon--primary icon--un-checked" viewBox="0 0 16 16"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M11 2H5a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V5a3 3 0 0 0-3-3zM5 1a4 4 0 0 0-4 4v6a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V5a4 4 0 0 0-4-4H5z"/>
+                        </svg>
+                        <div class="checkbox-text">Open</div>
+                        {{/if}}
                     </div>
                     <div class="title-box">
                         <text class="title">{{this.title}}</text>
@@ -89,7 +92,15 @@ export class TaskListController {
             shortenText(icon);
         });
         const checkboxes = document.querySelectorAll('.checkbox');
-        Array.from(checkboxes).forEach((checkbox) => selectCheckbox(checkbox));
+        Array.from(checkboxes).forEach((checkbox) => {
+            checkbox.addEventListener('click', (event) => {
+                const id = event.currentTarget.dataset.id;
+                const selectedTask = this.tasks.find((task) => task.id === id);
+                selectedTask.isFinished ? selectedTask.isFinished = false : selectedTask.isFinished = true;
+                this.taskService.update(selectedTask);
+                this.renderComponent();
+            });
+        });
         const iconContainers = document.querySelectorAll('[data-importance]');
         Array.from(iconContainers).forEach((iconContainer) => setImportance(iconContainer));
         const sortingRadioButtons = document.querySelectorAll('.radio-sort');

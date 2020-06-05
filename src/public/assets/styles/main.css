@@ -43,12 +43,12 @@
     justify-content: space-between;
 }
 
-.checkbox-text{
-    flex: 0 0 80%;
+.checkbox:hover{
+    cursor: pointer;
 }
 
-.icon--invisible{
-    display: none;
+.checkbox-text{
+    flex: 0 0 80%;
 }
 
 .deadline{
@@ -164,10 +164,12 @@ input:checked + label{
     .task-item-grid{
         grid-template: 1fr 1fr / 3fr 11fr 2fr;
         padding: 1rem;
+        max-height: 6rem;
     }
 
     .task-item-grid--opened{
         grid-template: 1fr 2fr / 3fr 11fr 2fr;
+        max-height: 9rem;
     }
 
     .deadline{
@@ -181,6 +183,7 @@ input:checked + label{
     .description-box {
         grid-row: 2;
         grid-column: 2;
+        overflow: hidden;
     }
 
     .checkbox{
@@ -204,6 +207,8 @@ input:checked + label{
 
     .description{
         flex: 0 0 85%;
+        overflow: hidden;
+        line-height: 1.7;
     }
 
     .expand-btn-container{
