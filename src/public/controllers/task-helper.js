@@ -1,53 +1,23 @@
-// function to set a given theme/color-scheme
-function setTheme(themeName) {
-    localStorage.setItem('theme', themeName);
-    document.documentElement.className = themeName;
+export const mainDateFormat = 'DD-MM-YYYY';
+
+export const sortingLogic = {
+    deadline: 'deadline',
+    creationDate: 'creation-date',
+    importance: 'importance'
 }
 
-// function to toggle between light and dark theme
-function toggleTheme() {
-    if (localStorage.getItem('theme') === 'theme-modern') {
-        setTheme('theme-classic');
-    } else {
-        setTheme('theme-modern');
-    }
-}
-
-// Immediately invoked function to set the theme on initial load
-(function () {
-    if (localStorage.getItem('theme') === 'theme-modern') {
-        setTheme('theme-modern');
-    } else {
-        setTheme('theme-classic');
-    }
-})();
-
-function init() {
-    const expandAndCollapseIcons = document.querySelectorAll('.icon--btn');
-    Array.from(expandAndCollapseIcons).forEach((icon) => {
-        icon.addEventListener('click', rotateIcon(icon));
-        icon.addEventListener('click', resizeItem);
-        icon.addEventListener('click', resizeTextLength);
-        shortenText(icon);
-    });
-    const checkboxes = document.querySelectorAll('.checkbox');
-    Array.from(checkboxes).forEach((checkbox) => selectCheckbox(checkbox));
-    const iconContainers = document.querySelectorAll('[data-importance]');
-    Array.from(iconContainers).forEach((iconContainer) => setImportance(iconContainer));
-}
-
-function rotateIcon(iconToRotate) {
+export function rotateIcon(iconToRotate) {
     return function () {
         iconToRotate.classList.toggle('icon--upside-down');
     }
 }
 
-function resizeItem(event) {
+export function resizeItem(event) {
     const item = event.currentTarget.closest('.task-item-grid');
     item.classList.toggle('task-item-grid--opened');
 }
 
-function resizeTextLength(event) {
+export function resizeTextLength(event) {
     const descriptionBox = event.currentTarget.closest('.description-box');
     const description = Array.from(descriptionBox.children)
         .find((child) => child.tagName === 'TEXT');
@@ -55,7 +25,7 @@ function resizeTextLength(event) {
     toggleTextLength(description, dataContent);
 }
 
-function toggleTextLength(description, dataContent) {
+export function toggleTextLength(description, dataContent) {
     if (description.textContent.length > 110) {
         description.textContent = dataContent.substring(0, 100) + '...';
     } else {
@@ -67,7 +37,7 @@ function toggleTextLength(description, dataContent) {
     }
 }
 
-function shortenText(icon) {
+export function shortenText(icon) {
     const descriptionBox = icon.closest('.description-box');
     const description = Array.from(descriptionBox.children)
         .find((child) => child.tagName === 'TEXT');
@@ -79,7 +49,7 @@ function shortenText(icon) {
     }
 }
 
-function selectCheckbox(checkbox) {
+export function selectCheckbox(checkbox) {
     const isFinished = checkbox.dataset.finished.toLowerCase() === 'true';
     if (isFinished) {
         hideIcon(checkbox.children, 'icon--un-checked');
@@ -89,13 +59,13 @@ function selectCheckbox(checkbox) {
 
 }
 
-function hideIcon(children, className) {
+export function hideIcon(children, className) {
     Array.from(children)
         .find((child) => child.classList.contains(className))
         .classList.add('icon--invisible');
 }
 
-function setImportance(iconContainer) {
+export function setImportance(iconContainer) {
     const importance = iconContainer.dataset.importance;
     const documentFragment = document.createDocumentFragment();
     for (let i = importance; i >= 0; i--) {
@@ -111,5 +81,36 @@ function setImportance(iconContainer) {
     iconContainer.appendChild(documentFragment);
 }
 
-init();
+export function initSortingLogic(btn, sortingLogic) {
+    if (btn.value === sortingLogic) {
+        btn.setAttribute('checked', 'true');
+    } else {
+        btn.removeAttribute('checked');
+    }
+}
 
+export function sortTasksBy(a, b, sortBy) {
+    switch (sortBy) {
+        case sortingLogic.deadline:
+            return moment(a.deadline, mainDateFormat).valueOf() - moment(b.deadline, mainDateFormat).valueOf();
+        case sortingLogic.creationDate:
+            return moment(a.creationDate, mainDateFormat).valueOf() - moment(b.creationDate, mainDateFormat).valueOf();
+        case sortingLogic.importance:
+            return b.importance - a.importance;
+        default:
+            return moment(a.deadline, mainDateFormat).valueOf() - moment(b.deadline, mainDateFormat).valueOf();
+    }
+}
+
+export function formatDate(dateString, dateFormat, resultFormat) {
+    return moment(dateString, dateFormat).format(resultFormat);
+}
+
+Handlebars.registerHelper('formatDate',
+    (dateString, resultFormat) => {
+        if (dateString) {
+            return moment(dateString, mainDateFormat).format(resultFormat);
+        } else {
+            return moment().format(resultFormat);
+        }
+    });

@@ -34,19 +34,22 @@ body {
 }
 
 .btn:hover {
-    color: var(--color-primary);
     background-color: var(--color-secondary);
-    border-color: var(--color-primary);
 }
 
 .btn:focus {
     outline: 0;
+    color: var(--color-primary);
     background-color: var(--color-secondary);
     border-color: var(--color-primary);
 }
 
 .container {
     margin-top: 2rem;
+}
+
+.hidden{
+    display: none;
 }
 
 @media screen and (min-width: 1000px){

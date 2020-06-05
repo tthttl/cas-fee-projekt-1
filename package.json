@@ -1,0 +1,26 @@
+{
+  "name": "cas-fee-projekt-1",
+  "version": "1.0.0",
+  "description": "Frontend Engineering Course HSR - Project 1 - HTML, CSS, Javascript",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tthttl/cas-fee-projekt-1.git"
+  },
+  "author": "Attila Toth",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tthttl/cas-fee-projekt-1/issues"
+  },
+  "homepage": "https://github.com/tthttl/cas-fee-projekt-1#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "handlebars": "^4.7.6",
+    "moment": "^2.26.0",
+    "nodemon": "^2.0.4"
+  }
+}

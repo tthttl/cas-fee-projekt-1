@@ -39,11 +39,15 @@ label{
 }
 
 a{
-    align-self: flex-end;
+
 }
 
 .btn--small {
     width: 20%;
+}
+
+#cancel{
+    align-self: flex-end;
 }
 
 .icon{
@@ -61,10 +65,6 @@ a{
 
 .icon:hover{
     cursor: pointer;
-}
-
-#priority{
-    display: none;
 }
 
 @media screen and (min-width: 1000px) {

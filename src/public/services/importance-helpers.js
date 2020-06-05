@@ -1,11 +1,11 @@
 const FILLED = 'icon--filled';
 const SELECTED = 'icon--selected';
 
-function initPriorityListeners() {
+export function initImportanceListeners() {
     const icons = document.querySelectorAll('.icon');
     Array.from(icons).forEach((icon, index) => {
         icon.addEventListener('mouseover', fillIcons(index, FILLED));
-        icon.addEventListener('click', setPriority(index));
+        icon.addEventListener('click', setImportance(index));
         icon.addEventListener('mouseout', removeFillWhenNotSelected);
     });
 }
@@ -23,14 +23,14 @@ function fillIcons(index, cssClass) {
     }
 }
 
-function setPriority(index) {
+export function setImportance(index, initial = false) {
     return function () {
-        const priority = document.getElementById('priority');
-        if(+priority.value === index){
+        const importance = document.getElementById('importance');
+        if(+importance.value === index && !initial){
             fillIcons(-1, SELECTED)();
-            priority.value = '';
+            importance.value = '';
         } else {
-            priority.value = index;
+            importance.value = index;
             fillIcons(index, SELECTED)();
         }
     }
@@ -44,5 +44,3 @@ function removeFillWhenNotSelected() {
         }
     });
 }
-
-initPriorityListeners();
