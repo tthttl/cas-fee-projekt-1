@@ -66,12 +66,14 @@ export default class TaskService {
         this.httpService = httpService;
     }
 
-    findAll() {
-        return Promise.resolve(this.dummyTasks);
+    async findAll() {
+        // return Promise.resolve(this.dummyTasks);
+        return await this.httpService.findAll();
     }
 
-    findById(id) {
-        return Promise.resolve(this.dummyTasks.find((task) => task.id === id));
+    async findById(id) {
+        // return Promise.resolve(this.dummyTasks.find((task) => task.id === id));
+        return await this.httpService.findById(id);
     }
 
     save(task){

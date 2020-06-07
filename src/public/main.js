@@ -3,8 +3,9 @@ import {TaskListController} from "./controllers/task-list-controller.js";
 import TaskService from "./services/task-service.js";
 import {FormController} from "./controllers/form-controller.js";
 import {Router} from "./services/router.js";
+import {HttpService} from "./services/http-service.js";
 
-const taskService = new TaskService(null);
+const taskService = new TaskService(new HttpService());
 const router = new Router();
 
 const routes = {

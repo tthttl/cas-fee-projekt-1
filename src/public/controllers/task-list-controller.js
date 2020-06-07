@@ -37,7 +37,7 @@ export class TaskListController {
                     <div class="deadline">
                         <text>{{this.deadline}}</text>
                     </div>
-                    <div class="checkbox" data-id="{{this.id}}">
+                    <div class="checkbox" data-id="{{this._id}}">
                         {{#if this.isFinished}}
                         <svg class="icon icon--primary icon--checked" viewBox="0 0 16 16"
                              xmlns="http://www.w3.org/2000/svg">
@@ -69,7 +69,7 @@ export class TaskListController {
                             </svg>
                         </div>
                     </div>
-                    <button class="btn btn--large" data-id="{{this.id}}">Edit</button>
+                    <button class="btn btn--large" data-id="{{this._id}}">Edit</button>
                 </div>
             {{/each}}
     </div>`;
@@ -95,7 +95,7 @@ export class TaskListController {
         Array.from(checkboxes).forEach((checkbox) => {
             checkbox.addEventListener('click', (event) => {
                 const id = event.currentTarget.dataset.id;
-                const selectedTask = this.tasks.find((task) => task.id === id);
+                const selectedTask = this.tasks.find((task) => task._id === id);
                 selectedTask.isFinished ? selectedTask.isFinished = false : selectedTask.isFinished = true;
                 this.taskService.update(selectedTask);
                 this.renderComponent();

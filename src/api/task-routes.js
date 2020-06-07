@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try{
         const task = await taskService.findById(req.params.id);
-        res.json(task);
+        res.json(task[0]);
     } catch (e) {
         res.sendStatus(500);
     }
