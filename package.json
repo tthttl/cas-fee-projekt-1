@@ -18,9 +18,11 @@
   },
   "homepage": "https://github.com/tthttl/cas-fee-projekt-1#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "handlebars": "^4.7.6",
     "moment": "^2.26.0",
+    "mongoose": "^5.9.18",
     "nodemon": "^2.0.4"
   }
 }
