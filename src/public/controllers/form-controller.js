@@ -95,12 +95,16 @@ export class FormController {
         createButton.classList.add('hidden');
         if (this.task) {
             setImportance(this.task.importance, true)();
+        } else {
+            document.getElementById('importance').value = '';
         }
         this.initEventListeners();
     }
 
     async init() {
-        this.task = await this.taskService.findById(this.id);
+        if(this.id){
+            this.task = await this.taskService.findById(this.id);
+        }
         this.renderComponent()
     }
 

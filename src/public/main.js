@@ -5,7 +5,7 @@ import {FormController} from "./controllers/form-controller.js";
 import {Router} from "./services/router.js";
 import {HttpService} from "./services/http-service.js";
 
-const taskService = new TaskService(new HttpService());
+const taskService = new TaskService(new HttpService(), '/tasks');
 const router = new Router();
 
 const routes = {

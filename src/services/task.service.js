@@ -11,7 +11,7 @@ class TaskService {
     }
 
     create(task){
-        Task.create(task);
+        return Task.create(task);
     }
 
     update(id, task){

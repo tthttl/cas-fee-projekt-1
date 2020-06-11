@@ -26,9 +26,10 @@ function fillIcons(index, cssClass) {
 export function setImportance(index, initial = false) {
     return function () {
         const importance = document.getElementById('importance');
-        if(+importance.value === index && !initial){
+        const currentValue = importance.value === '' ? -1 : +importance.value;
+        if(currentValue === index && !initial){
             fillIcons(-1, SELECTED)();
-            importance.value = '';
+            importance.value = -1;
         } else {
             importance.value = index;
             fillIcons(index, SELECTED)();

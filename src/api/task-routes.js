@@ -26,7 +26,8 @@ router.post('/', async (req, res) => {
     if(validate(req.body)){
         const task = req.body;
         try{
-            await taskService.create(task);
+            const savedTask = await taskService.create(task);
+            res.set('location', savedTask._id);
             res.sendStatus(201);
         } catch (e) {
             res.sendStatus(500);
