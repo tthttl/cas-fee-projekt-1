@@ -1,22 +1,36 @@
 import {initImportanceListeners, setImportance} from "../services/importance-helpers.js";
 import {formatDate, mainDateFormat} from "./task-helper.js";
+import {markAsDirty, isImportanceValid} from "./validation-helper.js";
 
 export class FormController {
 
     constructor(taskService, router) {
         this.template = ` 
-    <div class="form-grid">
+    <form class="form-grid">
         <div class="form-grid__row">
             <label for="title">Titel</label>
-            <input type="text" name="title" id="title" value="{{task.title}}">
+            <input type="text" 
+                class="form-input"
+                name="title" 
+                id="title" 
+                value="{{task.title}}" 
+                placeholder="Try to take over the world"
+                required
+                maxlength="50">
         </div>
         <div class="form-grid__row">
             <label for="description">Beschreibung</label>
-            <textarea name="description" id="description" rows="10">{{task.description}}</textarea>
+            <textarea name="description" 
+                id="description" 
+                class="form-input"
+                rows="10" 
+                placeholder="Same thing we do every night..."
+                required
+                maxlength="500">{{task.description}}</textarea>
         </div>
         <div class="form-grid__row">
             <label for="importance">Wichtigkeit</label>
-            <select name="importance" id="importance" class="hidden">
+            <select name="importance" id="importance" class="form-input hidden">
                 <option value="0"></option>
                 <option value="1"></option>
                 <option value="2"></option>
@@ -40,16 +54,22 @@ export class FormController {
                     <path fill-rule="evenodd" d="M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z"/>
                 </svg>
             </div>
+            <div class="errorMsg">Bitte Wichtigkeit wählen!</div>
         </div>
         <div class="form-grid__row">
             <label for="deadline">Erledigt bis</label>
-            <input type="date" name="deadline" id="deadline" value="{{formatDate task.deadline 'YYYY-MM-DD'}}">
+                <input type="date" 
+                class="form-input"
+                name="deadline" 
+                id="deadline" 
+                value="{{formatDate task.deadline 'YYYY-MM-DD'}}"
+                required>
         </div>
         <div class="form-grid__column">
             <button class="btn" id="save">Speichern</button>
-            <button class="btn btn--small" id="cancel">Cancel</button>
+            <button class="btn btn--small" id="cancel" type="reset">Cancel</button>
         </div>
-    </div>`;
+    </form>`;
 
         this.container = document.querySelector('.template-root');
         this.taskService = taskService;
@@ -59,32 +79,48 @@ export class FormController {
 
     initEventListeners() {
         initImportanceListeners();
-        const saveButton = document.getElementById('save');
-        saveButton.addEventListener('click', () => {
-            const title = document.getElementById('title').value;
-            const description = document.getElementById('description').value;
-            const importance = document.getElementById('importance').value;
-            const deadline = formatDate(document.getElementById('deadline').value, 'YYYY-MM-DD', mainDateFormat);
-            if (this.id) {
-                const updatedTask = {...this.task, title, description, importance, deadline};
-                this.taskService.update(updatedTask);
-            } else {
-                const taskToSave = {
-                    deadline,
-                    creationDate: moment().format(mainDateFormat),
-                    isFinished: false,
-                    title,
-                    importance,
-                    description
+        const form = document.querySelector('.form-grid');
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            if(form.checkValidity() && isImportanceValid()){
+                const title = document.getElementById('title').value;
+                const description = document.getElementById('description').value;
+                const importance = document.getElementById('importance').value;
+                const deadline = formatDate(document.getElementById('deadline').value, 'YYYY-MM-DD', mainDateFormat);
+                try {
+                    if (this.id) {
+                        const updatedTask = {...this.task, title, description, importance, deadline};
+                        await this.taskService.update(updatedTask);
+                    } else {
+                        const taskToSave = {
+                            deadline,
+                            creationDate: moment().format(mainDateFormat),
+                            isFinished: false,
+                            title,
+                            importance,
+                            description
+                        }
+                        await this.taskService.save(taskToSave);
+                    }
+                    this.router.navigateTo('tasklist');
+                } catch (e) {
+                    alert(e);
                 }
-                this.taskService.save(taskToSave);
+            } else {
+                form.reportValidity();
             }
-            this.router.navigateTo('tasklist');
         });
         const cancelButton = document.getElementById('cancel');
         cancelButton.addEventListener('click', () => {
             this.router.navigateTo('tasklist');
         });
+
+        Array.from(document.querySelectorAll('.form-input'))
+            .forEach((input) => {
+                input.addEventListener('blur', markAsDirty);
+                input.addEventListener('valid', markAsDirty);
+                input.addEventListener('invalid', markAsDirty);
+            });
     }
 
     renderComponent() {
@@ -102,7 +138,7 @@ export class FormController {
     }
 
     async init() {
-        if(this.id){
+        if (this.id) {
             this.task = await this.taskService.findById(this.id);
         }
         this.renderComponent()

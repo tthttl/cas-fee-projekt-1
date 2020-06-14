@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
         const tasks = await taskService.findAll();
         res.json(tasks);
     } catch (e) {
-        res.sendStatus(500);
+        res.status(500).json({});
     }
 });
 
@@ -18,7 +18,7 @@ router.get('/:id', async (req, res) => {
         const task = await taskService.findById(req.params.id);
         res.json(task[0]);
     } catch (e) {
-        res.sendStatus(500);
+        res.status(500).json({});
     }
 });
 
@@ -28,12 +28,12 @@ router.post('/', async (req, res) => {
         try{
             const savedTask = await taskService.create(task);
             res.set('location', savedTask._id);
-            res.sendStatus(201);
+            res.status(201).json({});
         } catch (e) {
-            res.sendStatus(500);
+            res.status(500).json({});
         }
     } else {
-        res.sendStatus(400);
+        res.status(400).json({});
     }
 });
 
@@ -42,17 +42,18 @@ router.put('/:id', async (req, res) => {
         const task = req.body;
         try{
             await taskService.update(req.params.id, task);
-            res.sendStatus(200);
+            res.status(200).json({});
         } catch (e) {
-            res.sendStatus(500);
+            res.status(500).json({});
         }
     } else {
-        res.sendStatus(400);
+        res.status(400).json({});
     }
 });
 
 function validate(task){
-    return (task.creationDate && task.deadline && task.title && task.description && task.importance);
+    return (task.creationDate && task.deadline && task.title && task.description
+        && task.importance !== undefined && task.isFinished !== undefined);
 }
 
 module.exports = router;

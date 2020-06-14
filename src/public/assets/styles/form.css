@@ -25,21 +25,31 @@ label{
 }
 
 #title,
-#description{
+#description {
     flex: 0 0 70%;
-    background-color: var(--color-secondary);
-    border-color: var(--shadow-color);
-    outline-color: var(--color-primary);
 }
 
-#deadline{
-    background-color: var(--color-secondary);
-    border-color: var(--shadow-color);
-    outline-color: var(--color-primary);
+.errorMsg{
+    display: none;
+    color: red;
 }
 
-a{
+.show{
+    display: block;
+}
 
+.form-input{
+    background-color: var(--color-secondary);
+    border-color: var(--shadow-color);
+    color: var(--color-primary);
+}
+
+.form-input.dirty:not(:focus):invalid{
+    outline: 1px solid red;
+}
+
+.form-input.dirty:not(:focus):valid{
+    background-color: var(--shadow-color);
 }
 
 .btn--small {

@@ -6,8 +6,7 @@ export class HttpService {
             method,
             headers: requestHeaders,
             body: JSON.stringify(data)
-        }).then((res) => res.json())
-            .catch((e) => console.log(e));
+        }).then((res) => res.json());
     }
 
 }
