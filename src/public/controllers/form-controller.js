@@ -1,4 +1,4 @@
-import {initImportanceListeners, setImportance} from "../services/importance-helpers.js";
+import {initImportanceListeners, setImportance} from "./importance-helpers.js";
 import {formatDate, mainDateFormat} from "./task-helper.js";
 import {markAsDirty, isImportanceValid} from "./validation-helper.js";
 
