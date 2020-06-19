@@ -32,6 +32,7 @@ export default class TaskListController {
         </ul>
     </div>
     <div class="container task-box">
+        {{#if tasks}}
             {{#each tasks}}
                 <div class="task-item-grid">
                     <div class="deadline">
@@ -72,6 +73,11 @@ export default class TaskListController {
                     <button class="btn btn--large" data-id="{{this._id}}">Edit</button>
                 </div>
             {{/each}}
+         {{else}}
+            <div >
+                <img class="image-responsive" src="../assets/images/To-do-list.jpg" alt="nothing">
+            </div>
+         {{/if}}
     </div>`;
 
         this.taskService = taskService;
