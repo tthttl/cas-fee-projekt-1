@@ -1,16 +1,20 @@
-export class ThemeController {
+export default class ThemeController {
+    constructor(store) {
+        this.storage = store;
+    }
 
-    initEventListeners(){
-        document.querySelector('.theme-selector-btn').addEventListener('click', this.toggleTheme.bind(this));
+    initEventListeners() {
+        document.querySelector('.theme-selector-btn')
+            .addEventListener('click', this.toggleTheme.bind(this));
     }
 
     setTheme(themeName) {
-        localStorage.setItem('theme', themeName);
+        this.storage.setItem('theme', themeName);
         document.documentElement.className = themeName;
     }
 
     toggleTheme() {
-        if (localStorage.getItem('theme') === 'theme-modern') {
+        if (this.storage.getItem('theme') === 'theme-modern') {
             this.setTheme('theme-classic');
         } else {
             this.setTheme('theme-modern');
@@ -18,16 +22,15 @@ export class ThemeController {
     }
 
     init() {
-        if (localStorage.getItem('theme') === 'theme-modern') {
+        if (this.storage.getItem('theme') === 'theme-modern') {
             this.setTheme('theme-modern');
         } else {
             this.setTheme('theme-classic');
         }
         this.initEventListeners();
-    };
-
-    static bootstrap() {
-        new ThemeController().init();
     }
 
+    static bootstrap() {
+        new ThemeController(localStorage).init();
+    }
 }

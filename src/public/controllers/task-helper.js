@@ -3,18 +3,28 @@ export const mainDateFormat = 'DD-MM-YYYY';
 export const sortingLogic = {
     deadline: 'deadline',
     creationDate: 'creation-date',
-    importance: 'importance'
-}
+    importance: 'importance',
+};
 
 export function rotateIcon(iconToRotate) {
     return function () {
         iconToRotate.classList.toggle('icon--upside-down');
-    }
+    };
 }
 
 export function resizeItem(event) {
     const item = event.currentTarget.closest('.task-item-grid');
     item.classList.toggle('task-item-grid--opened');
+}
+
+export function toggleTextLength(description, dataContent) {
+    if (description.textContent.length > 110) {
+        description.textContent = `${dataContent.substring(0, 100)}...`;
+    } else if (dataContent.length < 300) {
+        description.textContent = dataContent;
+    } else {
+        description.textContent = `${dataContent.substring(0, 300)}...`;
+    }
 }
 
 export function resizeTextLength(event) {
@@ -25,33 +35,22 @@ export function resizeTextLength(event) {
     toggleTextLength(description, dataContent);
 }
 
-export function toggleTextLength(description, dataContent) {
-    if (description.textContent.length > 110) {
-        description.textContent = dataContent.substring(0, 100) + '...';
-    } else {
-        if (dataContent.length < 300) {
-            description.textContent = dataContent;
-        } else {
-            description.textContent = dataContent.substring(0, 300) + '...';
-        }
-    }
-}
-
 export function shortenText(icon) {
     const descriptionBox = icon.closest('.description-box');
     const description = Array.from(descriptionBox.children)
         .find((child) => child.tagName === 'TEXT');
     const dataContent = description.dataset.content;
     if (dataContent.length > 100) {
-        description.textContent = dataContent.substring(0, 100) + '...';
+        description.textContent = `${dataContent.substring(0, 100)}...`;
     } else {
         description.textContent = dataContent;
     }
 }
 
 export function setImportance(iconContainer) {
-    const importance = iconContainer.dataset.importance;
+    const { importance } = iconContainer.dataset;
     const documentFragment = document.createDocumentFragment();
+    // eslint-disable-next-line no-plusplus
     for (let i = importance; i >= 0; i--) {
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         svg.setAttributeNS(null, 'class', 'icon icon--primary');
@@ -65,8 +64,8 @@ export function setImportance(iconContainer) {
     iconContainer.appendChild(documentFragment);
 }
 
-export function initSortingLogic(btn, sortingLogic) {
-    if (btn.value === sortingLogic) {
+export function initSortingLogic(btn, sortLogic) {
+    if (btn.value === sortLogic) {
         btn.setAttribute('checked', 'true');
     } else {
         btn.removeAttribute('checked');
@@ -75,14 +74,14 @@ export function initSortingLogic(btn, sortingLogic) {
 
 export function sortTasksBy(a, b, sortBy) {
     switch (sortBy) {
-        case sortingLogic.deadline:
-            return moment(a.deadline, mainDateFormat).valueOf() - moment(b.deadline, mainDateFormat).valueOf();
-        case sortingLogic.creationDate:
-            return moment(a.creationDate, mainDateFormat).valueOf() - moment(b.creationDate, mainDateFormat).valueOf();
-        case sortingLogic.importance:
-            return b.importance - a.importance;
-        default:
-            return moment(a.deadline, mainDateFormat).valueOf() - moment(b.deadline, mainDateFormat).valueOf();
+    case sortingLogic.deadline:
+        return moment(a.deadline, mainDateFormat).valueOf() - moment(b.deadline, mainDateFormat).valueOf();
+    case sortingLogic.creationDate:
+        return moment(a.creationDate, mainDateFormat).valueOf() - moment(b.creationDate, mainDateFormat).valueOf();
+    case sortingLogic.importance:
+        return b.importance - a.importance;
+    default:
+        return moment(a.deadline, mainDateFormat).valueOf() - moment(b.deadline, mainDateFormat).valueOf();
     }
 }
 
@@ -94,7 +93,6 @@ Handlebars.registerHelper('formatDate',
     (dateString, resultFormat) => {
         if (dateString) {
             return moment(dateString, mainDateFormat).format(resultFormat);
-        } else {
-            return moment().format(resultFormat);
         }
+        return moment().format(resultFormat);
     });

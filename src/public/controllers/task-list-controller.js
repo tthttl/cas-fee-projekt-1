@@ -6,10 +6,10 @@ import {
     shortenText,
     initSortingLogic,
     sortTasksBy,
-    sortingLogic
-} from "./task-helper.js";
+    sortingLogic,
+} from './task-helper.js';
 
-export class TaskListController {
+export default class TaskListController {
     constructor(taskService, router) {
         this.template = `
     <div class="container">
@@ -94,9 +94,9 @@ export class TaskListController {
         const checkboxes = document.querySelectorAll('.checkbox');
         Array.from(checkboxes).forEach((checkbox) => {
             checkbox.addEventListener('click', (event) => {
-                const id = event.currentTarget.dataset.id;
+                const { id } = event.currentTarget.dataset;
                 const selectedTask = this.tasks.find((task) => task._id === id);
-                selectedTask.isFinished ? selectedTask.isFinished = false : selectedTask.isFinished = true;
+                selectedTask.isFinished = !selectedTask.isFinished;
                 this.taskService.update(selectedTask);
                 this.renderComponent();
             });
@@ -115,7 +115,7 @@ export class TaskListController {
             }));
         const finishedFilter = document.querySelector('.filter-grid button');
         finishedFilter.addEventListener('click', () => {
-            this.isFinishedVisible ? this.isFinishedVisible = false : this.isFinishedVisible = true;
+            this.isFinishedVisible = !this.isFinishedVisible;
             this.renderComponent();
         });
         const editButtons = document.querySelectorAll('.btn--large');
@@ -127,7 +127,7 @@ export class TaskListController {
 
     renderComponent() {
         this.tasks = this.tasks.sort((a, b) => sortTasksBy(a, b, this.sortingLogic));
-        if(!this.isFinishedVisible) {
+        if (!this.isFinishedVisible) {
             this.visbleTasks = this.tasks.filter((task) => !task.isFinished);
         } else {
             this.visbleTasks = this.tasks;
@@ -136,7 +136,7 @@ export class TaskListController {
         this.container.innerHTML = Handlebars.compile(this.template)({
             tasks: this.visbleTasks,
             sortingLogic: this.sortingLogic,
-            isFinishedVisible: this.isFinishedVisible
+            isFinishedVisible: this.isFinishedVisible,
         });
         this.initEventListeners();
     }
@@ -149,5 +149,4 @@ export class TaskListController {
     static async bootstrap(taskService, router) {
         await new TaskListController(taskService, router).init();
     }
-
 }

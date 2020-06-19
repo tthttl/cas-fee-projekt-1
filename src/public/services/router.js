@@ -1,19 +1,19 @@
-export class Router {
-
-    navigateTo(page, id = ""){
+export default class Router {
+    // eslint-disable-next-line class-methods-use-this
+    navigateTo(page, id = '') {
         window.location = id ? `#${page}:${id}` : `#${page}`;
     }
 
-    getPage(){
+    getPage() {
         return this.parseLocation()[0];
     }
 
-    getIdParam(){
+    getIdParam() {
         return this.parseLocation()[1];
     }
 
-    parseLocation(){
+    // eslint-disable-next-line class-methods-use-this
+    parseLocation() {
         return window.location.hash.slice(1).toLowerCase().split(':');
     }
-
 }

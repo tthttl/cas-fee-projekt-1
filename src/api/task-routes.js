@@ -1,11 +1,17 @@
-const express = require('express'),
-    router = express.Router(),
-    TaskService = require('../services/task.service');
+const express = require('express');
+
+const router = express.Router();
+const TaskService = require('../services/task.service');
 
 const taskService = new TaskService();
 
+function validate(task) {
+    return (task.creationDate && task.deadline && task.title && task.description
+        && task.importance !== undefined && task.isFinished !== undefined);
+}
+
 router.get('/', async (req, res) => {
-    try{
+    try {
         const tasks = await taskService.findAll();
         res.json(tasks);
     } catch (e) {
@@ -14,7 +20,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-    try{
+    try {
         const task = await taskService.findById(req.params.id);
         res.json(task[0]);
     } catch (e) {
@@ -23,9 +29,9 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    if(validate(req.body)){
+    if (validate(req.body)) {
         const task = req.body;
-        try{
+        try {
             const savedTask = await taskService.create(task);
             res.set('location', savedTask._id);
             res.status(201).json({});
@@ -38,9 +44,9 @@ router.post('/', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-    if(validate(req.body)){
+    if (validate(req.body)) {
         const task = req.body;
-        try{
+        try {
             await taskService.update(req.params.id, task);
             res.status(200).json({});
         } catch (e) {
@@ -50,10 +56,5 @@ router.put('/:id', async (req, res) => {
         res.status(400).json({});
     }
 });
-
-function validate(task){
-    return (task.creationDate && task.deadline && task.title && task.description
-        && task.importance !== undefined && task.isFinished !== undefined);
-}
 
 module.exports = router;

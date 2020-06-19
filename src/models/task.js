@@ -6,7 +6,7 @@ const taskSchema = new mongoose.Schema({
     isFinished: Boolean,
     title: String,
     importance: Number,
-    description: String
+    description: String,
 });
 
 module.exports = mongoose.model('Task', taskSchema);

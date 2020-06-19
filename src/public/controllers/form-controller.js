@@ -1,9 +1,8 @@
-import {initImportanceListeners, setImportance} from "./importance-helpers.js";
-import {formatDate, mainDateFormat} from "./task-helper.js";
-import {markAsDirty, isImportanceValid} from "./validation-helper.js";
+import { initImportanceListeners, setImportance } from './importance-helpers.js';
+import { formatDate, mainDateFormat } from './task-helper.js';
+import { markAsDirty, isImportanceValid } from './validation-helper.js';
 
-export class FormController {
-
+export default class FormController {
     constructor(taskService, router) {
         this.template = ` 
     <form class="form-grid">
@@ -82,14 +81,16 @@ export class FormController {
         const form = document.querySelector('.form-grid');
         form.addEventListener('submit', async (event) => {
             event.preventDefault();
-            if(form.checkValidity() && isImportanceValid()){
+            if (form.checkValidity() && isImportanceValid()) {
                 const title = document.getElementById('title').value;
                 const description = document.getElementById('description').value;
                 const importance = document.getElementById('importance').value;
                 const deadline = formatDate(document.getElementById('deadline').value, 'YYYY-MM-DD', mainDateFormat);
                 try {
                     if (this.id) {
-                        const updatedTask = {...this.task, title, description, importance, deadline};
+                        const updatedTask = {
+                            ...this.task, title, description, importance, deadline,
+                        };
                         await this.taskService.update(updatedTask);
                     } else {
                         const taskToSave = {
@@ -98,8 +99,8 @@ export class FormController {
                             isFinished: false,
                             title,
                             importance,
-                            description
-                        }
+                            description,
+                        };
                         await this.taskService.save(taskToSave);
                     }
                     this.router.navigateTo('tasklist');
@@ -125,7 +126,7 @@ export class FormController {
 
     renderComponent() {
         this.container.innerHTML = Handlebars.compile(this.template)({
-            task: this.task
+            task: this.task,
         });
         const createButton = document.querySelector('.new-task-btn');
         createButton.classList.add('hidden');
@@ -141,7 +142,7 @@ export class FormController {
         if (this.id) {
             this.task = await this.taskService.findById(this.id);
         }
-        this.renderComponent()
+        this.renderComponent();
     }
 
     static async bootstrap(taskService, router) {

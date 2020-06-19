@@ -1,5 +1,5 @@
 export function markAsDirty(event) {
-    const currentTarget = event.currentTarget;
+    const { currentTarget } = event;
     currentTarget.classList.add('dirty');
 }
 

@@ -1,16 +1,16 @@
-import {ThemeController} from "./controllers/theme-controller.js";
-import {TaskListController} from "./controllers/task-list-controller.js";
-import TaskService from "./services/task-service.js";
-import {FormController} from "./controllers/form-controller.js";
-import {Router} from "./services/router.js";
-import {HttpService} from "./services/http-service.js";
+import ThemeController from './controllers/theme-controller.js';
+import TaskService from './services/task-service.js';
+import HttpService from './services/http-service.js';
+import Router from './services/router.js';
+import TaskListController from './controllers/task-list-controller.js';
+import FormController from './controllers/form-controller.js';
 
 const taskService = new TaskService(new HttpService(), '/tasks');
 const router = new Router();
 
 const routes = {
     tasklist: TaskListController,
-    form: FormController
+    form: FormController,
 };
 
 document.addEventListener('DOMContentLoaded', () => {

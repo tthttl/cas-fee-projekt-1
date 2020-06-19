@@ -7,10 +7,10 @@ const dummyTasks = [
         isFinished: false,
         title: 'Finish Projekt 1',
         importance: 2,
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n' +
-            'Architecto consequatur cum ea eligendi eos esse eveniet ipsa\n' +
-            'ipsam laudantium minima molestias mollitia nesciunt omnis,\n' +
-            'quod sed sunt, vero voluptatibus! Veritatis!'
+        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n'
+            + 'Architecto consequatur cum ea eligendi eos esse eveniet ipsa\n'
+            + 'ipsam laudantium minima molestias mollitia nesciunt omnis,\n'
+            + 'quod sed sunt, vero voluptatibus! Veritatis!',
     },
     {
         creationDate: '02-01-2020',
@@ -18,10 +18,10 @@ const dummyTasks = [
         isFinished: false,
         title: 'Finish Projekt 2',
         importance: 3,
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n' +
-            'Architecto consequatur cum ea eligendi eos esse eveniet ipsa\n' +
-            'ipsam laudantium minima molestias mollitia nesciunt omnis,\n' +
-            'quod sed sunt, vero voluptatibus! Veritatis!'
+        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n'
+            + 'Architecto consequatur cum ea eligendi eos esse eveniet ipsa\n'
+            + 'ipsam laudantium minima molestias mollitia nesciunt omnis,\n'
+            + 'quod sed sunt, vero voluptatibus! Veritatis!',
     },
     {
         creationDate: '03-01-2020',
@@ -29,7 +29,7 @@ const dummyTasks = [
         isFinished: true,
         title: 'Get eggs',
         importance: 4,
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n'
+        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n',
     },
     {
         creationDate: '04-01-2020',
@@ -37,8 +37,8 @@ const dummyTasks = [
         isFinished: true,
         title: 'Stay safe',
         importance: 1,
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n' +
-            'Architecto consequatur cum ea eligendi eos esse eveniet ipsa\n'
+        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n'
+            + 'Architecto consequatur cum ea eligendi eos esse eveniet ipsa\n',
     },
     {
         creationDate: '05-01-2020',
@@ -46,15 +46,15 @@ const dummyTasks = [
         isFinished: false,
         title: 'Find my true self',
         importance: 0,
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n' +
-            'Architecto consequatur cum ea eligendi eos esse eveniet ipsa\n' +
-            'ipsam laudantium minima molestias mollitia nesciunt omnis,\n' +
-            'quod sed sunt, vero voluptatibus! veritatis! \n' +
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n' +
-            'Architecto consequatur cum ea eligendi eos esse eveniet ipsa\n' +
-            'ipsam laudantium minima molestias mollitia nesciunt omnis,\n' +
-            'quod sed sunt, vero voluptatibus! veritatis!'
-    }
+        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n'
+            + 'Architecto consequatur cum ea eligendi eos esse eveniet ipsa\n'
+            + 'ipsam laudantium minima molestias mollitia nesciunt omnis,\n'
+            + 'quod sed sunt, vero voluptatibus! veritatis! \n'
+            + 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n'
+            + 'Architecto consequatur cum ea eligendi eos esse eveniet ipsa\n'
+            + 'ipsam laudantium minima molestias mollitia nesciunt omnis,\n'
+            + 'quod sed sunt, vero voluptatibus! veritatis!',
+    },
 ];
 
 async function initDB() {
