@@ -10,7 +10,29 @@ import {
 } from './task-helper.js';
 
 export default class TaskListController {
-    constructor(taskService, router) {
+    saveSortingLogic(selectedSortingLogic) {
+        this.storage.setItem('sortingLogic', selectedSortingLogic);
+    }
+
+    getSortingLogic() {
+        return this.storage.getItem('sortingLogic');
+    }
+
+    saveIsFinishedVisible(isFinishedVisible) {
+        this.storage.setItem('isFinishedVisible', isFinishedVisible);
+    }
+
+    getIsFinishedVisible() {
+        const stringValue = this.storage.getItem('isFinishedVisible');
+        switch (stringValue) {
+        case 'false':
+            return false;
+        default:
+            return true;
+        }
+    }
+
+    constructor(taskService, router, storage) {
         this.template = `
     <div class="container">
         <ul class="filter-grid">
@@ -80,53 +102,61 @@ export default class TaskListController {
          {{/if}}
     </div>`;
 
+        this.storage = storage;
         this.taskService = taskService;
         this.router = router;
         this.container = document.querySelector('.template-root');
-        this.sortingLogic = sortingLogic.deadline;
-        this.isFinishedVisible = true;
+        this.sortingLogic = this.getSortingLogic() || sortingLogic.deadline;
+        this.isFinishedVisible = this.getIsFinishedVisible();
         this.tasks = [];
         this.visbleTasks = [];
     }
 
     initEventListeners() {
         const expandAndCollapseIcons = document.querySelectorAll('.icon--btn');
-        Array.from(expandAndCollapseIcons).forEach((icon) => {
-            icon.addEventListener('click', rotateIcon(icon));
-            icon.addEventListener('click', resizeItem);
-            icon.addEventListener('click', resizeTextLength);
-            shortenText(icon);
-        });
-        const checkboxes = document.querySelectorAll('.checkbox');
-        Array.from(checkboxes).forEach((checkbox) => {
-            checkbox.addEventListener('click', (event) => {
-                const { id } = event.currentTarget.dataset;
-                const selectedTask = this.tasks.find((task) => task._id === id);
-                selectedTask.isFinished = !selectedTask.isFinished;
-                this.taskService.update(selectedTask);
-                this.renderComponent();
+        Array.from(expandAndCollapseIcons)
+            .forEach((icon) => {
+                icon.addEventListener('click', rotateIcon(icon));
+                icon.addEventListener('click', resizeItem);
+                icon.addEventListener('click', resizeTextLength);
+                shortenText(icon);
             });
-        });
+        const checkboxes = document.querySelectorAll('.checkbox');
+        Array.from(checkboxes)
+            .forEach((checkbox) => {
+                checkbox.addEventListener('click', (event) => {
+                    const { id } = event.currentTarget.dataset;
+                    const selectedTask = this.tasks.find((task) => task._id === id);
+                    selectedTask.isFinished = !selectedTask.isFinished;
+                    this.taskService.update(selectedTask);
+                    this.renderComponent();
+                });
+            });
         const iconContainers = document.querySelectorAll('[data-importance]');
-        Array.from(iconContainers).forEach((iconContainer) => setImportance(iconContainer));
+        Array.from(iconContainers)
+            .forEach((iconContainer) => setImportance(iconContainer));
         const sortingRadioButtons = document.querySelectorAll('.radio-sort');
-        Array.from(sortingRadioButtons).forEach((btn) => {
-            initSortingLogic(btn, this.sortingLogic);
-        });
+        Array.from(sortingRadioButtons)
+            .forEach((btn) => {
+                initSortingLogic(btn, this.sortingLogic);
+            });
         const sortingLabels = document.querySelectorAll('.label-sort');
         Array.from(sortingLabels)
             .forEach((label) => label.addEventListener('click', (event) => {
                 this.sortingLogic = event.currentTarget.dataset && event.currentTarget.dataset.sortby;
+                this.saveSortingLogic(this.sortingLogic);
                 this.renderComponent();
             }));
         const finishedFilter = document.querySelector('.filter-grid button');
         finishedFilter.addEventListener('click', () => {
             this.isFinishedVisible = !this.isFinishedVisible;
+            this.saveIsFinishedVisible(this.isFinishedVisible);
             this.renderComponent();
         });
         const editButtons = document.querySelectorAll('.btn--large');
-        Array.from(editButtons).forEach((btn) => btn.addEventListener('click',
-            () => this.router.navigateTo('form', btn.dataset.id)));
+        Array.from(editButtons)
+            .forEach((btn) => btn.addEventListener('click',
+                () => this.router.navigateTo('form', btn.dataset.id)));
         const createButton = document.querySelector('.new-task-btn');
         createButton.addEventListener('click', () => this.router.navigateTo('form'));
     }
@@ -138,7 +168,9 @@ export default class TaskListController {
         } else {
             this.visbleTasks = this.tasks;
         }
-        document.querySelector('.new-task-btn').classList.remove('hidden');
+        document.querySelector('.new-task-btn')
+            .classList
+            .remove('hidden');
         this.container.innerHTML = Handlebars.compile(this.template)({
             tasks: this.visbleTasks,
             sortingLogic: this.sortingLogic,
@@ -153,6 +185,6 @@ export default class TaskListController {
     }
 
     static async bootstrap(taskService, router) {
-        await new TaskListController(taskService, router).init();
+        await new TaskListController(taskService, router, localStorage).init();
     }
 }
