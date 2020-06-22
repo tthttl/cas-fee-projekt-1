@@ -96,9 +96,7 @@ export default class TaskListController {
                 </div>
             {{/each}}
          {{else}}
-            <div >
-                <img class="image-responsive" src="../assets/images/To-do-list.jpg" alt="nothing">
-            </div>
+              <img class="image-responsive" src="../assets/images/To-do-list.jpg" alt="nothing">
          {{/if}}
     </div>`;
 
