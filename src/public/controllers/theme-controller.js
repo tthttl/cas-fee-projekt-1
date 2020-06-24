@@ -1,6 +1,6 @@
 export default class ThemeController {
-    constructor(store) {
-        this.storage = store;
+    constructor(storageService) {
+        this.storage = storageService;
     }
 
     initEventListeners() {
@@ -30,7 +30,7 @@ export default class ThemeController {
         this.initEventListeners();
     }
 
-    static bootstrap() {
-        new ThemeController(localStorage).init();
+    static bootstrap(storageService) {
+        new ThemeController(storageService).init();
     }
 }

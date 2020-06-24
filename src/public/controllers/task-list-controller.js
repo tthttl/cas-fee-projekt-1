@@ -32,7 +32,7 @@ export default class TaskListController {
         }
     }
 
-    constructor(taskService, router, storage) {
+    constructor(taskService, router, storageService) {
         this.template = `
     <div class="container">
         <ul class="filter-grid">
@@ -100,7 +100,7 @@ export default class TaskListController {
          {{/if}}
     </div>`;
 
-        this.storage = storage;
+        this.storage = storageService;
         this.taskService = taskService;
         this.router = router;
         this.container = document.querySelector('.template-root');
@@ -182,7 +182,7 @@ export default class TaskListController {
         this.renderComponent();
     }
 
-    static async bootstrap(taskService, router) {
-        await new TaskListController(taskService, router, localStorage).init();
+    static async bootstrap(taskService, router, storageService) {
+        await new TaskListController(taskService, router, storageService).init();
     }
 }
